@@ -198,15 +198,15 @@ flowchart LR
     C --> D["D — main, feature"]
 ```
 
-အခု main နဲ့ feature နှစ်ခုလုံး D ကို ညွှန်းနေတယ်။
-main ထဲမှာ Login form နဲ့ Login button ပါလာပြီ။
+အခုဆိုရင်  main နဲ့ feature နှစ်ခုလုံးက D ကို ညွှန်းနေတယ်။
+main ထဲမှာ Login form နဲ့ Login button ရော ပါလာပြီ။
 
 **Commit အသစ် မလုပ်ဘဲ main ကို B ကနေ D ဆီ
 ရွှေ့ပေးတာကို Fast-forward merge လို့ ခေါ်တယ်။**
 
 `--ff-only` က fast-forward လုပ်လို့ရမှ ပေါင်းပေးတယ်။
 branch နှစ်ခုလုံးမှာ သီးခြား commit အသစ်ရှိနေရင်
-merge မလုပ်ဘဲ ရပ်သွားမယ်။
+merge မလုပ်ဘဲ ရပ်သွားပါမယ် 
 
 ## 2. Non-fast-forward Merge
 
