@@ -52,14 +52,12 @@ git switch main
 git switch -c feature
 ```
 
-ဒီ command က အောက်က command နှစ်ခုနဲ့ တူတယ်။
+ဒီ command က အောက်က command နှစ်ခုနဲ့ တူပါတယ်
 
 ```bash
 git branch feature
 git switch feature
 ```
-
-feature ဆိုတဲ့ branch မရှိသေးတဲ့အချိန်မှာ သုံးရတယ်။
 
 ### 5. Commit ဥပမာနဲ့ ကြည့်မယ်
 
@@ -70,8 +68,7 @@ main ပေါ်ကနေ feature ခွဲမယ်။
 git switch -c feature
 ```
 
-Branch ခွဲရုံနဲ့ commit အသစ် မဖြစ်ဘူး။
-main နဲ့ feature နှစ်ခုလုံး B ကို ညွှန်းနေတယ်။
+main နဲ့ feature နှစ်ခုလုံး က B ကို ညွှန်းနေတယ်။
 
 | Branch | Commit history |
 |---|---|
@@ -85,7 +82,7 @@ git add login.html
 git commit -m "Add login form"
 ```
 
-အခု အခြေအနေက—
+အခုအခြေအနေ 
 
 ```mermaid
 flowchart LR
@@ -110,9 +107,6 @@ git merge feature
 ```bash
 git branch -m login
 ```
-
-Branch နာမည်ပဲ ပြောင်းတယ်။
-Commit နဲ့ ဖိုင်အကြောင်းအရာတွေ မပြောင်းဘူး။
 
 ### 7. အလုပ်ပြီးတဲ့ Branch ကို ဖျက်မယ်
 
