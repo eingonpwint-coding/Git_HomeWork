@@ -99,7 +99,7 @@ git switch main
 git merge feature
 ```
 
-### 6. Branch နာမည်ပြောင်းမယ်
+### 6. Branch နာမည်ပြောင်း
 
 လက်ရှိ branch က feature ဖြစ်ပြီး login လို့
 နာမည်ပြောင်းချင်ရင်—
@@ -108,7 +108,7 @@ git merge feature
 git branch -m login
 ```
 
-### 7. အလုပ်ပြီးတဲ့ Branch ကို ဖျက်မယ်
+### 7. Branch ကို ဖျက်ချင်ရင်
 
 feature ကို main ထဲ merge ပြီးပြီဆိုရင်—
 
@@ -118,10 +118,10 @@ git branch -d feature
 ```
 
 ဖျက်မယ့် branch ပေါ်မှာ ရှိနေရင် ဖျက်လို့မရဘူး။
-အရင် main ကို ပြောင်းရတယ်။
+main branch ကို အရင်ပြောင်းရတယ်။
 
 `-d` က merge မဖြစ်သေးတဲ့အလုပ်ရှိရင်
-ဖျက်တာကို တားပေးနိုင်တယ်။
+ဖျက်တာကို တားပေးနိုင်
 
 Local branch ဖျက်တာနဲ့ GitHub ပေါ်က branch
 မပျက်ပါဘူး။
