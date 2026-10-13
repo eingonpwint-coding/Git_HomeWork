@@ -141,25 +141,11 @@ Local branch ဖျက်တာနဲ့ GitHub ပေါ်က branch
 
 ### Checkout နဲ့ Switch
 
-သင်ခန်းစာအဟောင်းတွေမှာ checkout ကို တွေ့နိုင်တယ်။
-
 | Switch command | Checkout command |
 |---|---|
 | `git switch feature` | `git checkout feature` |
 | `git switch -c feature` | `git checkout -b feature` |
 
-ဒီဥပမာတွေမှာ နှစ်မျိုးလုံးက branch ပြောင်းတာ၊
-branch အသစ်ခွဲတာကို လုပ်ပေးတယ်။
-
-### မှတ်ထားရန်
-
-Branch မပြောင်းခင် `git status` နဲ့ စစ်ပါ။
-မပြီးသေးတဲ့ ဖိုင်အပြောင်းအလဲတွေက တခြား branch ဆီ
-ပါသွားနိုင်သလို branch ပြောင်းတာကို Git က
-တားနိုင်တာလည်း ရှိတယ်။
-
-အစပိုင်းမှာ အလုပ်ကို commit လုပ်ပြီးမှ
-branch ပြောင်းတာ ပိုရှင်းတယ်။
 
 ## 1. Fast-forward Merge
 
