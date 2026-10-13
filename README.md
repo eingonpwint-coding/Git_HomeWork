@@ -147,7 +147,7 @@ Local branch ဖျက်တာနဲ့ GitHub ပေါ်က branch
 | `git switch -c feature` | `git checkout -b feature` |
 
 
-###Merge
+### Merge
 1. Fast-forward Merge
 2. Non-fast-forward Merge
 3. Squash Merge
