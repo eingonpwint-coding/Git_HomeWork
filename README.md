@@ -354,3 +354,227 @@ Feature branch မှာ မူရင်း C၊ D၊ E commit တွေ ဆက�
 **Squash က အလုပ်တွေကို လျှော့တာမဟုတ်ဘူး။
 အလုပ်အဆင့်ဆင့်ကို main ထဲမှာ commit တစ်ခုတည်းနဲ့
 စုပြီး မှတ်တမ်းတင်တာပါ။**
+
+## Git Time Traveling Cheat Sheet
+
+Git မှာ commit လုပ်ထားတဲ့ အခြေအနေအဟောင်းတွေကို
+ပြန်ကြည့်နိုင်တယ်။ မှားထားတဲ့အလုပ်ကိုလည်း ပြန်ပြင်နိုင်တယ်။
+
+အောက်က ဥပမာတွေကို တစ်ခုချင်း သီးခြားစမ်းရမယ်။
+Command အားလုံးကို ဆက်တိုက်လုပ်ဖို့ မဟုတ်ပါဘူး။
+
+### ဥပမာ Commit History
+
+```mermaid
+flowchart LR
+    A["A: Home page"] --> B["B: Menu"]
+    B --> C["C: Login form"]
+    C --> D["D: Login button — main, HEAD"]
+```
+
+main က D ကို ညွှန်းနေတယ်။
+main ပေါ်မှာ ရှိနေလို့ HEAD လည်း D မှာ ရှိတယ်။
+
+- `HEAD` = အခု ကိုယ်ရှိနေတဲ့ commit
+- `HEAD~1` = ဒီဥပမာမှာ C
+- `HEAD~2` = ဒီဥပမာမှာ B
+
+### 1. Commit History ကြည့်မယ်
+
+```bash
+git log --oneline
+```
+
+ဥပမာ အဖြေ—
+
+```text
+d4e5f6a Add login button
+c3d4e5f Add login form
+b2c3d4e Add menu
+a1b2c3d Add home page
+```
+
+အပေါ်ဆုံးက နောက်ဆုံး commit ပါ။
+ရှေ့က စာလုံးနဲ့နံပါတ်တွေက commit ID ဖြစ်တယ်။
+
+ဒီ ID တွေက ဥပမာသာဖြစ်လို့ လက်တွေ့သုံးတဲ့အခါ
+ကိုယ့် log ထဲက ID ကို အစားထိုးရမယ်။
+
+Commit တစ်ခုမှာ ဘာပြောင်းထားလဲ ကြည့်ချင်ရင်—
+
+```bash
+git show c3d4e5f
+```
+
+### 2. Commit အဟောင်းကို ပြန်ကြည့်မယ်
+
+C တုန်းက ဖိုင်အခြေအနေကို ကြည့်ချင်ရင်—
+
+```bash
+git switch --detach c3d4e5f
+```
+
+```mermaid
+flowchart LR
+    A[A] --> B[B]
+    B --> C["C — HEAD"]
+    C --> D["D — main"]
+```
+
+HEAD က C ဆီ ရောက်သွားတယ်။
+main ကတော့ D မှာ ရှိနေဆဲ။
+
+Working folder မှာ C တုန်းက ဖိုင်တွေကို မြင်ရမယ်။
+ဒီဥပမာမှာ Login form ရှိပြီး Login button မရှိသေးဘူး။
+
+main ကို ပြန်လာချင်ရင်—
+
+```bash
+git switch main
+```
+
+အခု D ရဲ့ ဖိုင်အခြေအနေကို ပြန်ရောက်ပြီ။
+
+အဟောင်းကနေ အလုပ်အသစ် ဆက်လုပ်ချင်ရင်
+branch ခွဲပြီး လုပ်နိုင်တယ်။
+
+```bash
+git switch -c experiment
+```
+
+### 3. Revert — မှားတဲ့အလုပ်ကို ပြန်ပြောင်းမယ်
+
+D မှာ ထည့်ထားတဲ့ Login button ကို
+ပြန်ဖယ်ချင်တယ်လို့ ယူဆပါ။
+
+D ပေါ်မှာ ရှိနေတဲ့အချိန်—
+
+```bash
+git revert HEAD
+```
+
+```mermaid
+flowchart LR
+    A[A] --> B[B]
+    B --> C[C]
+    C --> D[D]
+    D --> R["R: D အလုပ်ကို ပြန်ပြောင်း — main, HEAD"]
+```
+
+Git က D ကို မဖျက်ဘဲ D ရဲ့အပြောင်းအလဲကို
+ပြန်ပြောင်းတဲ့ R commit အသစ် ထည့်ပေးတယ်။
+
+- Login button ထည့်ထားတာ ပြန်ဖယ်သွားမယ်။
+- D မှတ်တမ်း ဆက်ရှိတယ်။
+- ပြန်ပြင်ထားတဲ့ R မှတ်တမ်းလည်း ရှိတယ်။
+
+GitHub ပေါ်တင်ပြီး အဖွဲ့နဲ့ မျှဝေထားတဲ့ commit ကို
+ပြန်ပြင်ဖို့ သင့်တော်တယ်။
+
+### 4. Reset — Branch ကို အဟောင်းဆီ ပြန်ရွှေ့မယ်
+
+မူလ A → B → C → D အခြေအနေကနေ စပါမယ်။
+
+D ပေါ်ကနေ အောက်ပါ reset command တစ်ခုခုသုံးရင်
+main ကို C ဆီ ပြန်ရွှေ့ပေးတယ်။
+
+D က main ရဲ့ လက်ရှိ history ထဲ မပါတော့ဘူး။
+Commit ကို Git ထဲက ချက်ချင်း အပြီးဖျက်တာ မဟုတ်ဘူး။
+
+#### Soft Reset
+
+```bash
+git reset --soft HEAD~1
+```
+
+main က C ကို ပြန်ရောက်တယ်။
+
+ဒါပေမယ့် D မှာရေးထားတဲ့ Login button code က
+ဖိုင်ထဲမှာလည်း ကျန်တယ်၊ stage ထဲမှာလည်း ကျန်တယ်။
+
+ပြန်သိမ်းချင်ရင် `git commit` လုပ်ရုံပဲ။
+
+#### Mixed Reset
+
+```bash
+git reset --mixed HEAD~1
+```
+
+main က C ကို ပြန်ရောက်တယ်။
+
+Login button code က ဖိုင်ထဲမှာ ကျန်တယ်။
+ဒါပေမယ့် stage ထဲမှာ မရှိတော့ဘူး။
+
+ပြန်သိမ်းချင်ရင်—
+
+```bash
+git add login.html
+git commit -m "Add login button"
+```
+
+#### Hard Reset
+
+```bash
+git reset --hard HEAD~1
+```
+
+main က C ကို ပြန်ရောက်ပြီး tracked files တွေကိုပါ
+C တုန်းကအတိုင်း ပြန်ထားတယ်။
+
+ဒီဥပမာမှာ Login button code ပြန်ပျောက်သွားမယ်။
+
+**Commit မလုပ်ရသေးတဲ့ tracked file အပြောင်းအလဲတွေလည်း
+ပျောက်နိုင်လို့ မသုံးခင် သေချာစစ်ရမယ်။**
+
+### Reset သုံးမျိုး နှိုင်းယှဉ်ချက်
+
+| အချက် | Soft | Mixed | Hard |
+|---|---|---|---|
+| main ကို D ကနေ C ဆီ ရွှေ့လား? | ရွှေ့တယ် | ရွှေ့တယ် | ရွှေ့တယ် |
+| D မှာရေးထားတဲ့ code ကျန်လား? | ကျန်တယ် | ကျန်တယ် | ဖိုင်ကို C အတိုင်း ပြန်ထားတယ် |
+| D အပြောင်းအလဲ stage ထဲ ကျန်လား? | ကျန်တယ် | မကျန်ဘူး | မကျန်ဘူး |
+
+### 5. Reset မှားသွားရင် Commit ပြန်ရှာမယ်
+
+```bash
+git reflog
+```
+
+HEAD နဲ့ branch ရွှေ့ခဲ့တဲ့ local မှတ်တမ်းတွေကို
+ကြည့်နိုင်တယ်။ ပြန်လိုချင်တဲ့ D ရဲ့ ID ကို ရှာပြီး
+branch အသစ်နဲ့ သိမ်းထားနိုင်တယ်။
+
+```bash
+git branch recovered d4e5f6a
+git switch recovered
+```
+
+`reflog` က commit မလုပ်ရသေးတဲ့ code ကို
+ပြန်ယူပေးတဲ့ backup မဟုတ်ပါဘူး။
+
+### Command အတိုချုပ်
+
+| လုပ်ချင်တာ | Command |
+|---|---|
+| Commit history ကြည့်မယ် | `git log --oneline` |
+| Commit တစ်ခုရဲ့ အပြောင်းအလဲကြည့်မယ် | `git show <commit-id>` |
+| အဟောင်းကို ကြည့်ရုံကြည့်မယ် | `git switch --detach <commit-id>` |
+| main ကို ပြန်လာမယ် | `git switch main` |
+| နောက်ဆုံး commit ရဲ့အလုပ်ကို ပြန်ပြောင်းမယ် | `git revert HEAD` |
+| Commit ဖြုတ်ပြီး code နဲ့ stage ကို ထားမယ် | `git reset --soft HEAD~1` |
+| Commit ဖြုတ်ပြီး code ကိုပဲ ထားမယ် | `git reset --mixed HEAD~1` |
+| Commit ဖြုတ်ပြီး tracked files ပါ အဟောင်းပြန်ထားမယ် | `git reset --hard HEAD~1` |
+| ရွှေ့ခဲ့တဲ့ commit တွေ ပြန်ရှာမယ် | `git reflog` |
+
+`<commit-id>` နေရာမှာ ကိုယ့် commit ID ကို ထည့်ပါ။
+
+### အလွယ်မှတ်ရန်
+
+- အဟောင်းကို ကြည့်ရုံဆို `switch --detach`
+- မှတ်တမ်းဟောင်းကို ထားပြီး ပြန်ပြင်ချင်ရင် `revert`
+- Branch ကို အဟောင်းဆီ ပြန်ရွှေ့ချင်ရင် `reset`
+
+အဟောင်းကို သွားကြည့်တာ၊ revert သို့မဟုတ် reset
+မလုပ်ခင် `git status` နဲ့ လက်ရှိအလုပ်ကို စစ်ပါ။
+Push ပြီးသား အဖွဲ့သုံး history ကို ပြန်ပြင်ရာမှာ
+reset ထက် revert ကို ဦးစားပေးစဉ်းစားပါ။
