@@ -1,4 +1,5 @@
-# Git_HomeWork## Squash Merge
+# Git_HomeWork
+## Squash Merge
 
 Squash merge ဆိုတာ feature branch က အပြောင်းအလဲတွေကို
 main ထဲမှာ commit တစ်ခုတည်းအဖြစ် စုပြီး သိမ်းတာပါ။
