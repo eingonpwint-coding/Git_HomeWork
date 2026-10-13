@@ -178,7 +178,7 @@ flowchart LR
 - main ရဲ့ history က A → B ဖြစ်တယ်။
 - feature ရဲ့ history က A → B → C → D ဖြစ်တယ်။
 
-### အသုံးပြုမယ့် Command
+### အသုံးပြုရတဲ့ Command
 
 ```bash
 git switch main
