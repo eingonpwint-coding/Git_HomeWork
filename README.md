@@ -210,16 +210,17 @@ merge မလုပ်ဘဲ ရပ်သွားပါမယ်
 
 ## 2. Non-fast-forward Merge
 
-main ကနေ feature ခွဲပြီးနောက် main နဲ့ feature
-နှစ်ခုလုံးမှာ သီးခြား commit အသစ်တွေ လုပ်ထားတယ်။
+main branch ကနေ feature branch ခွဲပြီးနောက် main branch 
+နဲ့ feature branch နှစ်ခုလုံးမှာ 
+သီးခြား commit အသစ်တွေ လုပ်ထားတယ်။
 
 ### ဥပမာ
 
-main မှာ A နဲ့ B commit ရှိတယ်။
-B ကနေ feature ခွဲထားတယ်။
+main branch မှာ A နဲ့ B commit ရှိတယ်။
+B ကနေ feature branch ခွဲထားတယ်။
 
-- feature မှာ C = Login page ထည့်တယ်။
-- main မှာ D = Contact page ထည့်တယ်။
+- feature branch မှာ C = Login page ထပ်ထည့်
+- main branch မှာ D = Contact page ထပ်ထည့်
 
 ### Merge မလုပ်ခင်
 
