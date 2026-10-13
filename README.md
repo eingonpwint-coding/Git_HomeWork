@@ -147,6 +147,13 @@ Local branch ဖျက်တာနဲ့ GitHub ပေါ်က branch
 | `git switch -c feature` | `git checkout -b feature` |
 
 
+###Merge
+1. Fast-forward Merge
+2. Non-fast-forward Merge
+3. Squash Merge
+
+
+
 ## 1. Fast-forward Merge
 
 main ကနေ feature branch ခွဲပြီးနောက် feature မှာပဲ
