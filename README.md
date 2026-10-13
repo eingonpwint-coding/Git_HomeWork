@@ -578,3 +578,179 @@ git switch recovered
 မလုပ်ခင် `git status` နဲ့ လက်ရှိအလုပ်ကို စစ်ပါ။
 Push ပြီးသား အဖွဲ့သုံး history ကို ပြန်ပြင်ရာမှာ
 reset ထက် revert ကို ဦးစားပေးစဉ်းစားပါ။
+
+## Rebase vs Merge Cheat Sheet
+
+Merge နဲ့ Rebase နှစ်ခုလုံးက branch တွေရဲ့အလုပ်တွေကို
+ပေါင်းစပ်ဖို့ သုံးတယ်။ Commit history ထားပုံ ကွာတယ်။
+
+### စတင်အခြေအနေ
+
+A နဲ့ B commit ရှိတဲ့ main ကနေ feature ခွဲထားတယ်။
+
+- feature မှာ C = Login form ရေးတယ်။
+- feature မှာ D = Login button ထည့်တယ်။
+- main မှာ E = Contact page ထည့်တယ်။
+
+```mermaid
+flowchart TD
+    A[A] --> B[B]
+    B --> E["E: Contact page — main"]
+    B --> C["C: Login form"]
+    C --> D["D: Login button — feature"]
+```
+
+| Branch | Commit history |
+|---|---|
+| main | A → B → E |
+| feature | A → B → C → D |
+
+အောက်က Merge နဲ့ Rebase ဥပမာတွေကို ဒီအခြေအနေကနေ
+သီးခြားစတယ်လို့ ယူဆပါ။ ဆက်တိုက်လုပ်ဖို့ မဟုတ်ပါဘူး။
+
+### 1. Merge
+
+Feature ရဲ့ Login အလုပ်တွေကို main ထဲ ပေါင်းမယ်။
+
+```bash
+git switch main
+git merge feature
+```
+
+#### လုပ်ပြီးနောက်
+
+```mermaid
+flowchart TD
+    A[A] --> B[B]
+    B --> E[E]
+    B --> C[C]
+    C --> D["D — feature"]
+    E --> M["M — main"]
+    D --> M
+```
+
+- E နဲ့ D ကို ချိတ်တဲ့ M merge commit အသစ် ရတယ်။
+- မူရင်း C၊ D၊ E commit တွေ မပြောင်းဘူး။
+- main က M ကို ညွှန်းတယ်။
+- feature က D ကို ညွှန်းနေဆဲ။
+- main မှာ Contact page နဲ့ Login အလုပ်တွေ ပါလာတယ်။
+
+**Merge က ခွဲလုပ်ထားတဲ့ history နှစ်ခုကို ပေါင်းချိတ်တာပါ။**
+
+### 2. Rebase
+
+ကိုယ့် feature အလုပ်တွေကို main ရဲ့ နောက်ဆုံးအလုပ်
+E အပေါ်မှာ ပြန်တင်မယ်။
+
+```bash
+git switch feature
+git rebase main
+```
+
+#### လုပ်ပြီးနောက်
+
+```mermaid
+flowchart LR
+    A[A] --> B[B]
+    B --> E["E — main"]
+    E --> C2["C′: Login form"]
+    C2 --> D2["D′: Login button — feature"]
+```
+
+Git က—
+
+1. main ရဲ့ E ကို base အသစ်အဖြစ် ယူတယ်။
+2. C ရဲ့ Login form အပြောင်းအလဲကို E အပေါ်
+   ပြန်တင်ပြီး C′ commit လုပ်တယ်။
+3. D ရဲ့ Login button အပြောင်းအလဲကို C′ အပေါ်
+   ပြန်တင်ပြီး D′ commit လုပ်တယ်။
+
+C′ နဲ့ D′ က commit အသစ်တွေဖြစ်လို့
+မူရင်း C၊ D နဲ့ commit ID မတူတော့ဘူး။
+
+| Branch | Rebase မလုပ်ခင် | Rebase လုပ်ပြီး |
+|---|---|---|
+| main | A → B → E | A → B → E |
+| feature | A → B → C → D | A → B → E → C′ → D′ |
+
+**Rebase က ကိုယ့် commit တွေကို base အသစ်အပေါ်
+ပြန်တင်တာပါ။ ဒီအချိန်မှာ main က E မှာပဲ ရှိသေးတယ်။**
+
+### Rebase ပြီး main ထဲ ထည့်မယ်
+
+main မှာ commit အသစ် ထပ်မလုပ်ထားဘူးဆိုရင်—
+
+```bash
+git switch main
+git merge --ff-only feature
+```
+
+```mermaid
+flowchart LR
+    A[A] --> B[B]
+    B --> E[E]
+    E --> C2[C′]
+    C2 --> D2["D′ — main, feature"]
+```
+
+အခု main က D′ ဆီ ရောက်သွားပြီး
+Contact page နဲ့ Login အလုပ်တွေ ပါလာပြီ။
+
+### ကွာခြားချက် အတိုချုပ်
+
+| အချက် | Merge | Rebase |
+|---|---|---|
+| ဘာလုပ်တာလဲ? | History နှစ်ခုကို ပေါင်းချိတ်တယ် | Commit တွေကို base အသစ်အပေါ် ပြန်တင်တယ် |
+| မူရင်း commit ID | မပြောင်းဘူး | ပြန်တင်တဲ့ commit ID တွေ ပြောင်းတယ် |
+| ဒီဥပမာရဲ့ history | နှစ်လမ်းခွဲပြီး M မှာ ပေါင်းတယ် | တစ်လမ်းတည်း ဖြစ်သွားတယ် |
+| ဒီ command တွေက ပြောင်းတဲ့ branch | main | feature |
+| ဘယ်အချိန်သုံးလဲ? | အလုပ်ပြီးတဲ့ branch ကို ပေါင်းရာမှာ | ကိုယ့် feature ကို main အသစ်နဲ့ update လုပ်ရာမှာ |
+
+### Conflict ဖြစ်ရင်
+
+ဖိုင်တစ်ခုရဲ့ တူညီတဲ့နေရာကို နှစ်ဘက်က
+မတူအောင် ပြင်ထားရင် conflict ဖြစ်နိုင်တယ်။
+
+Conflict ဖြစ်တဲ့ဖိုင်ကို ဖွင့်ပြီး လိုချင်တဲ့စာတွေကို
+ထားပါ။ Conflict marker တွေဖယ်ပြီး Save လုပ်ပါ။
+
+Merge ကို ဆက်လုပ်မယ်ဆိုရင်—
+
+```bash
+git add <file>
+git merge --continue
+```
+
+Rebase ကို ဆက်လုပ်မယ်ဆိုရင်—
+
+```bash
+git add <file>
+git rebase --continue
+```
+
+Rebase က commit တစ်ခုချင်း ပြန်တင်တာဖြစ်လို့
+conflict ကို တစ်ကြိမ်ထက်ပို ဖြေရှင်းရနိုင်တယ်။
+
+စလုပ်မယ့်အခြေအနေကို ပြန်သွားချင်ရင်—
+
+```bash
+git merge --abort
+```
+
+သို့မဟုတ် rebase လုပ်နေတယ်ဆိုရင်—
+
+```bash
+git rebase --abort
+```
+
+`<file>` နေရာမှာ conflict ဖြေရှင်းထားတဲ့
+ဖိုင်နာမည်ကို ထည့်ပါ။
+
+### အလွယ်မှတ်ရန်
+
+- Merge = အလုပ်နှစ်ဘက်ကို ပေါင်းချိတ်တယ်။
+- Rebase = main အသစ်အပေါ် ကိုယ့်အလုပ်ကို ပြန်တင်တယ်။
+- Rebase လုပ်ရုံနဲ့ feature အလုပ်တွေ main ထဲ မဝင်သေးဘူး။
+- တခြားသူတွေ ယူသုံးနေတဲ့ branch ကို rebase လုပ်မယ်ဆို
+  commit ID ပြောင်းနိုင်လို့ အဖွဲ့နဲ့ အရင်ညှိရမယ်။
+
