@@ -1,4 +1,172 @@
+
 # Git_HomeWork
+
+## Git Branching Cheat Sheet
+
+Branch ဆိုတာ အလုပ်အသစ်တစ်ခုကို သီးခြားခွဲလုပ်ဖို့
+သုံးတာပါ။ ဥပမာ main ကနေ feature branch ခွဲပြီး
+Login page ရေးနိုင်တယ်။
+
+### 1. Branch တွေ ကြည့်မယ်
+
+```bash
+git branch
+```
+
+ဥပမာ အဖြေ—
+
+```text
+  feature
+* main
+```
+
+`*` ပါတဲ့ main က အခု ကိုယ်ရှိနေတဲ့ branch ပါ။
+
+### 2. Branch အသစ်လုပ်မယ်
+
+```bash
+git branch feature
+```
+
+feature branch အသစ်လုပ်ပေးတယ်။
+ဒါပေမယ့် ကိုယ်က main ပေါ်မှာပဲ ရှိနေသေးတယ်။
+
+### 3. ရှိပြီးသား Branch ကို ပြောင်းမယ်
+
+```bash
+git switch feature
+```
+
+အခု feature branch ကို ရောက်သွားပြီ။
+ဒီမှာ commit လုပ်ရင် feature ရဲ့ history ထဲ ဝင်မယ်။
+
+main ကို ပြန်ပြောင်းချင်ရင်—
+
+```bash
+git switch main
+```
+
+### 4. Branch အသစ်လုပ်ပြီး တစ်ခါတည်း ပြောင်းမယ်
+
+```bash
+git switch -c feature
+```
+
+ဒီ command က အောက်က command နှစ်ခုနဲ့ တူတယ်။
+
+```bash
+git branch feature
+git switch feature
+```
+
+feature ဆိုတဲ့ branch မရှိသေးတဲ့အချိန်မှာ သုံးရတယ်။
+
+### 5. Commit ဥပမာနဲ့ ကြည့်မယ်
+
+main မှာ A နဲ့ B commit ရှိတယ်။
+main ပေါ်ကနေ feature ခွဲမယ်။
+
+```bash
+git switch -c feature
+```
+
+Branch ခွဲရုံနဲ့ commit အသစ် မဖြစ်ဘူး။
+main နဲ့ feature နှစ်ခုလုံး B ကို ညွှန်းနေတယ်။
+
+| Branch | Commit history |
+|---|---|
+| main | A → B |
+| feature | A → B |
+
+feature မှာ Login form ရေးပြီး commit C လုပ်မယ်။
+
+```bash
+git add login.html
+git commit -m "Add login form"
+```
+
+အခု အခြေအနေက—
+
+```mermaid
+flowchart LR
+    A[A] --> B["B — main"]
+    B --> C["C — feature"]
+```
+
+- main က B မှာ ကျန်တယ်။
+- feature က C ဆီ ရွှေ့သွားတယ်။
+- C ကို main ထဲ ထည့်ချင်ရင် merge လုပ်ရမယ်။
+
+```bash
+git switch main
+git merge feature
+```
+
+### 6. Branch နာမည်ပြောင်းမယ်
+
+လက်ရှိ branch က feature ဖြစ်ပြီး login လို့
+နာမည်ပြောင်းချင်ရင်—
+
+```bash
+git branch -m login
+```
+
+Branch နာမည်ပဲ ပြောင်းတယ်။
+Commit နဲ့ ဖိုင်အကြောင်းအရာတွေ မပြောင်းဘူး။
+
+### 7. အလုပ်ပြီးတဲ့ Branch ကို ဖျက်မယ်
+
+feature ကို main ထဲ merge ပြီးပြီဆိုရင်—
+
+```bash
+git switch main
+git branch -d feature
+```
+
+ဖျက်မယ့် branch ပေါ်မှာ ရှိနေရင် ဖျက်လို့မရဘူး။
+အရင် main ကို ပြောင်းရတယ်။
+
+`-d` က merge မဖြစ်သေးတဲ့အလုပ်ရှိရင်
+ဖျက်တာကို တားပေးနိုင်တယ်။
+
+Local branch ဖျက်တာနဲ့ GitHub ပေါ်က branch
+မပျက်ပါဘူး။
+
+### Command အတိုချုပ်
+
+| လုပ်ချင်တာ | Command |
+|---|---|
+| Local branch တွေကြည့်မယ် | `git branch` |
+| လက်ရှိ branch နဲ့ ဖိုင်အခြေအနေစစ်မယ် | `git status` |
+| Branch အသစ်လုပ်မယ် | `git branch feature` |
+| ရှိပြီးသား branch ကို ပြောင်းမယ် | `git switch feature` |
+| အသစ်လုပ်ပြီး ပြောင်းမယ် | `git switch -c feature` |
+| main ကို ပြန်ပြောင်းမယ် | `git switch main` |
+| လက်ရှိ branch နာမည်ပြောင်းမယ် | `git branch -m login` |
+| အလုပ်ပြီးတဲ့ branch ဖျက်မယ် | `git branch -d feature` |
+
+### Checkout နဲ့ Switch
+
+သင်ခန်းစာအဟောင်းတွေမှာ checkout ကို တွေ့နိုင်တယ်။
+
+| Switch command | Checkout command |
+|---|---|
+| `git switch feature` | `git checkout feature` |
+| `git switch -c feature` | `git checkout -b feature` |
+
+ဒီဥပမာတွေမှာ နှစ်မျိုးလုံးက branch ပြောင်းတာ၊
+branch အသစ်ခွဲတာကို လုပ်ပေးတယ်။
+
+### မှတ်ထားရန်
+
+Branch မပြောင်းခင် `git status` နဲ့ စစ်ပါ။
+မပြီးသေးတဲ့ ဖိုင်အပြောင်းအလဲတွေက တခြား branch ဆီ
+ပါသွားနိုင်သလို branch ပြောင်းတာကို Git က
+တားနိုင်တာလည်း ရှိတယ်။
+
+အစပိုင်းမှာ အလုပ်ကို commit လုပ်ပြီးမှ
+branch ပြောင်းတာ ပိုရှင်းတယ်။
+
 ## 1. Fast-forward Merge
 
 main ကနေ feature branch ခွဲပြီးနောက် feature မှာပဲ
