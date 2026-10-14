@@ -432,11 +432,11 @@ git switch -c experiment
 
 ### 3. Revert — မှားတဲ့အလုပ်ကို ပြန်ပြင် တဲ့ commit အသစ်ထည့်တာပါ
 
-လက်ရှိ က A B C D
+လက်ရှိ က  A → B → C → D
 အခု D မှာ ထည့်ထားတဲ့ Login button ကို
 ပြန်ဖယ်ချင်တယ်
 
-D ပေါ်မှာ ရှိနေတဲ့အချိန်— revert ကိုသုံးရင် 
+D ပေါ်မှာ ရှိနေတဲ့အချိန် — revert ကိုသုံးရင် 
 
 ```bash
 git revert HEAD
