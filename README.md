@@ -597,9 +597,6 @@ flowchart TD
 | main | A → B → E |
 | feature | A → B → C → D |
 
-အောက်က Merge နဲ့ Rebase ဥပမာတွေကို ဒီအခြေအနေကနေ
-သီးခြားစတယ်လို့ ယူဆပါ။ ဆက်တိုက်လုပ်ဖို့ မဟုတ်ပါဘူး။
-
 ### 1. Merge
 
 Feature ရဲ့ Login အလုပ်တွေကို main ထဲ ပေါင်းမယ်။
